@@ -39,7 +39,8 @@ def upload():
         extracted_data = {}
         for doc in result.documents:
             for field, val in doc.fields.items():
-                extracted_data[field] = val.value
+                 # Always return raw OCR-extracted string, not typed Python object
+                 extracted_data[field] = val.content if hasattr(val, 'content') else str(val.value)              
 
         return jsonify(extracted_data)
     else:

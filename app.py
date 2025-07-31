@@ -9,6 +9,8 @@ app = Flask(__name__)
 
 endpoint = os.environ.get("AZURE_FORMRECOGNIZER_ENDPOINT")
 key = os.environ.get("AZURE_FORMRECOGNIZER_KEY")
+if not endpoint or not key:
+    raise ValueError("Missing Azure endpoint or key. Make sure environment variables are set.")
 
 client = DocumentAnalysisClient(endpoint=endpoint, credential=AzureKeyCredential(key))
 

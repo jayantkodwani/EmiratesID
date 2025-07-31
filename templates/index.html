@@ -1,3 +1,4 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
     <h2>Upload Emirates ID</h2>
     <form id="upload-form" enctype="multipart/form-data">
         <input type="file" name="image" accept="image/*,application/pdf" required />
+
         <button type="submit">Scan</button>
     </form>
     <div id="result"></div>
@@ -20,43 +22,8 @@
                 method: 'POST',
                 body: formData
             });
-
             const data = await res.json();
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = ''; // Clear previous results
-
-            for (const section in data) {
-                const sectionTitle = document.createElement('h3');
-                sectionTitle.textContent = section;
-                resultDiv.appendChild(sectionTitle);
-
-                const table = document.createElement('table');
-                table.border = "1";
-                table.cellPadding = "5";
-                table.cellSpacing = "0";
-
-                const headerRow = document.createElement('tr');
-                const th1 = document.createElement('th');
-                th1.textContent = "Field";
-                const th2 = document.createElement('th');
-                th2.textContent = "Value";
-                headerRow.appendChild(th1);
-                headerRow.appendChild(th2);
-                table.appendChild(headerRow);
-
-                for (const key in data[section]) {
-                    const row = document.createElement('tr');
-                    const cell1 = document.createElement('td');
-                    const cell2 = document.createElement('td');
-                    cell1.textContent = key;
-                    cell2.textContent = data[section][key];
-                    row.appendChild(cell1);
-                    row.appendChild(cell2);
-                    table.appendChild(row);
-                }
-
-                resultDiv.appendChild(table);
-            }
+            document.getElementById('result').innerText = JSON.stringify(data, null, 2);
         };
     </script>
 </body>

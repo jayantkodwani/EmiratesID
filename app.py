@@ -48,15 +48,15 @@ def upload():
         file2 = BytesIO(file_bytes)
 
         try:
-            # Analyze with Model 1
-            poller1 = client.begin_analyze_document("Emirates_ID_Back", document=file1)
-            result1 = poller1.result()
-            data1 = extract_fields(result1)
-
-            # Analyze with Model 2
+            # Analyze with Front Model
             poller2 = client.begin_analyze_document("Emirates_ID_Front_V2", document=file2)
             result2 = poller2.result()
             data2 = extract_fields(result2)
+
+            # Analyze with Back Model
+            poller1 = client.begin_analyze_document("Emirates_ID_Back", document=file1)
+            result1 = poller1.result()
+            data1 = extract_fields(result1)
 
             # Combine results under separate sections
             combined_result = {

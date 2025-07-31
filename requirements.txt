@@ -1,3 +1,4 @@
 flask
 azure-ai-formrecognizer
 azure-core
+gunicorn

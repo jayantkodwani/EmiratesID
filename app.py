@@ -7,10 +7,9 @@ from io import BytesIO
 
 app = Flask(__name__)
 
+# Use environment variables for security
 endpoint = os.environ.get("AZURE_FORMRECOGNIZER_ENDPOINT")
 key = os.environ.get("AZURE_FORMRECOGNIZER_KEY")
-if not endpoint or not key:
-    raise ValueError("Missing Azure endpoint or key. Make sure environment variables are set.")
 
 client = DocumentAnalysisClient(endpoint=endpoint, credential=AzureKeyCredential(key))
 
@@ -51,7 +50,7 @@ def upload():
             result1 = poller1.result()
             data1 = extract_fields(result1)
 
-            poller2 = client.begin_analyze_document("Emirates_ID_Back", document=file2)
+            poller2 = client.begin_analyze_document("Emirates_ID_Back_V2", document=file2)
             result2 = poller2.result()
             data2 = extract_fields(result2)
 

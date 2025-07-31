@@ -1,3 +1,4 @@
+<!-- templates/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,26 +6,24 @@
     <title>Emirates ID OCR</title>
 </head>
 <body>
-    <h2>Upload Emirates ID (Image or PDF)</h2>
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*,application/pdf" required />
+    <h2>Upload Emirates ID</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required />
         <button type="submit">Scan</button>
     </form>
+    <div id="result"></div>
 
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-
-    {% if result %}
-        <h3>Scan Result</h3>
-        {% for section, fields in result.items() %}
-            <h4>{{ section }}</h4>
-            <ul>
-                {% for key, value in fields.items() %}
-                    <li><strong>{{ key }}:</strong> {{ value }}</li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    {% endif %}
+    <script>
+        document.getElementById('upload-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const res = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+        };
+    </script>
 </body>
 </html>

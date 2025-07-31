@@ -6,8 +6,9 @@ from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
-endpoint = "https://<your-endpoint>.cognitiveservices.azure.com/"
-key = "<your-key>"
+# Use environment variables for security
+endpoint = os.environ.get("AZURE_FORMRECOGNIZER_ENDPOINT")
+key = os.environ.get("AZURE_FORMRECOGNIZER_KEY")
 
 client = DocumentAnalysisClient(endpoint=endpoint, credential=AzureKeyCredential(key))
 

@@ -50,7 +50,7 @@ def upload():
             result1 = poller1.result()
             data1 = extract_fields(result1)
 
-            poller2 = client.begin_analyze_document("Emirates_ID_Back_V2", document=file2)
+            poller2 = client.begin_analyze_document("Emirates_ID_Back", document=file2)
             result2 = poller2.result()
             data2 = extract_fields(result2)
 

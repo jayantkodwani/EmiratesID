@@ -59,9 +59,9 @@ def upload():
             data1 = extract_fields(result1)
 
             # Combine results under separate sections
-            combined_result = {
-                "Emirates_ID_Front": data2,
-                "Emirates_ID_Back": data1
+            combined_result = {                
+                "Emirates_ID_Back": data1,
+                "Emirates_ID_Front": data2
                 
             }
 

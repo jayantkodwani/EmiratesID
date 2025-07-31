@@ -60,8 +60,9 @@ def upload():
 
             # Combine results under separate sections
             combined_result = {
-                "Emirates_ID_Back": data1,
-                "Emirates_ID_Front": data2
+                "Emirates_ID_Front": data2,
+                "Emirates_ID_Back": data1
+                
             }
 
             return jsonify(combined_result)

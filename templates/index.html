@@ -1,8 +1,38 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Emirates ID OCR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        #loader {
+            display: none;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #result {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h2>Upload Emirates ID (Image or PDF)</h2>
@@ -10,18 +40,37 @@
         <input type="file" name="image" accept="image/*,application/pdf" required />
         <button type="submit">Scan</button>
     </form>
+
+    <!-- Fancy spinner loader -->
+    <div id="loader"></div>
+
     <pre id="result"></pre>
 
     <script>
         document.getElementById('upload-form').onsubmit = async (e) => {
             e.preventDefault();
+
+            const loader = document.getElementById('loader');
+            const result = document.getElementById('result');
             const formData = new FormData(e.target);
-            const res = await fetch('/upload', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+
+            // Show loader and clear previous result
+            loader.style.display = 'block';
+            result.innerText = '';
+
+            try {
+                const res = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+                result.innerText = JSON.stringify(data, null, 2);
+            } catch (err) {
+                result.innerText = 'Error: ' + err.message;
+            } finally {
+                loader.style.display = 'none';
+            }
         };
     </script>
 </body>

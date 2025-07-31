@@ -25,12 +25,24 @@
             100% { transform: rotate(360deg); }
         }
 
-        #result {
-            white-space: pre-wrap;
-            background-color: #f9f9f9;
-            padding: 15px;
-            border: 1px solid #ddd;
+        table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h3 {
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -41,10 +53,9 @@
         <button type="submit">Scan</button>
     </form>
 
-    <!-- Fancy spinner loader -->
     <div id="loader"></div>
 
-    <pre id="result"></pre>
+    <div id="result"></div>
 
     <script>
         document.getElementById('upload-form').onsubmit = async (e) => {
@@ -54,9 +65,8 @@
             const result = document.getElementById('result');
             const formData = new FormData(e.target);
 
-            // Show loader and clear previous result
             loader.style.display = 'block';
-            result.innerText = '';
+            result.innerHTML = '';
 
             try {
                 const res = await fetch('/upload', {
@@ -65,9 +75,42 @@
                 });
 
                 const data = await res.json();
-                result.innerText = JSON.stringify(data, null, 2);
+                if (data.error) {
+                    result.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+                } else {
+                    result.innerHTML = '';
+
+                    for (const section in data) {
+                        const sectionData = data[section];
+                        const table = document.createElement('table');
+                        const caption = document.createElement('h3');
+                        caption.textContent = section.replace(/_/g, ' ');
+                        result.appendChild(caption);
+                        const headerRow = document.createElement('tr');
+                        const th1 = document.createElement('th');
+                        th1.textContent = 'Field';
+                        const th2 = document.createElement('th');
+                        th2.textContent = 'Value';
+                        headerRow.appendChild(th1);
+                        headerRow.appendChild(th2);
+                        table.appendChild(headerRow);
+
+                        for (const key in sectionData) {
+                            const row = document.createElement('tr');
+                            const field = document.createElement('td');
+                            field.textContent = key;
+                            const value = document.createElement('td');
+                            value.textContent = sectionData[key];
+                            row.appendChild(field);
+                            row.appendChild(value);
+                            table.appendChild(row);
+                        }
+
+                        result.appendChild(table);
+                    }
+                }
             } catch (err) {
-                result.innerText = 'Error: ' + err.message;
+                result.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
             } finally {
                 loader.style.display = 'none';
             }

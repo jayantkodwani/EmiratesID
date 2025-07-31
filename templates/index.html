@@ -19,18 +19,11 @@
         <h3>Scan Result</h3>
         {% for section, fields in result.items() %}
             <h4>{{ section }}</h4>
-            <table border="1" cellpadding="5" cellspacing="0">
-                <tr>
-                    <th>Field</th>
-                    <th>Value</th>
-                </tr>
+            <ul>
                 {% for key, value in fields.items() %}
-                    <tr>
-                        <td>{{ key }}</td>
-                        <td>{{ value }}</td>
-                    </tr>
+                    <li><strong>{{ key }}:</strong> {{ value }}</li>
                 {% endfor %}
-            </table>
+            </ul>
         {% endfor %}
     {% endif %}
 </body>

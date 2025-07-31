@@ -83,7 +83,7 @@
                 } else {
                     result.innerHTML = '';
 
-                    for (const section in data) {
+                    for (const section of Object.keys(data).reverse()) {
                         const sectionData = data[section];
                         const table = document.createElement('table');
                         const caption = document.createElement('h3');

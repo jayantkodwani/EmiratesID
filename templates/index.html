@@ -98,7 +98,8 @@
                         headerRow.appendChild(th2);
                         table.appendChild(headerRow);
 
-                        for (const key in sectionData) {
+                        
+                        for (const key of Object.keys(sectionData).reverse()) {
                             const row = document.createElement('tr');
                             const field = document.createElement('td');
                             field.textContent = key;

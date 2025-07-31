@@ -64,8 +64,7 @@ def upload():
                 "Emirates_ID_Back": data2
             }
 
-            return render_template("index.html", result=combined_result)
-
+            return jsonify(combined_result)
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 

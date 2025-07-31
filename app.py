@@ -33,7 +33,7 @@ def upload():
         if file_length > MAX_FILE_SIZE_MB * 1024 * 1024:
             return jsonify({"error": "File too large. Max 4MB allowed."}), 400
 
-        poller = client.begin_analyze_document("prebuilt-idDocument", document=file)
+        poller = client.begin_analyze_document("Emirates_ID_Front_V2", document=file)
         result = poller.result()
 
         extracted_data = {}

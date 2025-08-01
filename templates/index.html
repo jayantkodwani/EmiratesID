@@ -6,12 +6,25 @@
         <img src="{{ url_for('static', filename='AcePerfect.jpg') }}" alt="Logo" style="height: 110px; margin-right: 15px;">
         <h2>Upload Emirates ID (Image or PDF)</h2>
     </header>
-    <style>
+
+
+     
+     
+     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
         }
 
+          .container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 30px 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      max-width: 700px;
+      text-align: center;
+                   }
+         
         #loader {
             display: none;
             border: 8px solid #f3f3f3;
@@ -49,7 +62,14 @@
         }
     </style>
 </head>
+
+
+    
 <body>
+
+     <div class="container">
+    <p> <strong>AcePerfect Data Technologies</strong> has successfully harnessed advanced OCR (Optical Character Recognition) capabilities to automate the scanning and data extraction process from UAE Emirates ID cards with high accuracy and compliance. Leveraging AI-powered document intelligence, our solution reads and digitizes both the front and back of the Emirates ID—capturing key details such as name, nationality, ID number, and expiry date in real time. This has streamlined KYC processes for clients across banking, telecom, and government sectors, reducing manual effort and turnaround time by over 80%, while ensuring data security and UAE regulatory alignment.</p>
+ </div>
 
     <form id="upload-form" enctype="multipart/form-data">
         <input type="file" name="image" accept="image/*,application/pdf" required />
